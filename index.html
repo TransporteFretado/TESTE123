@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Consulta Itinerários | Alumar</title>
+    <title>Consulta e Sugestão | Alumar</title>
     <style>
         :root {
-            /* Paleta Alumar / Alcoa */
-            --primary: #165788;    /* Alcoa Blue */
-            --secondary: #818A8F;  /* Alcoa Grey */
+            --primary: #165788;
+            --secondary: #818A8F;
             --white: #FFFFFF;
-            --black: #000000;
-            
             --whatsapp: #25d366;
             --bg: #f8f9fa;
             --card: #ffffff;
             --text: #333333;
             --border: #d1d5db;
-            --muted: #6b7280;
             --accent: #16578810;
             --danger: #dc2626;
             --highlight: #fef9c3;
@@ -29,174 +25,46 @@
                 --card: #1f2937;
                 --text: #f3f4f6;
                 --border: #374151;
-                --muted: #9ca3af;
                 --accent: #16578830;
                 --highlight: #3f3f17;
             }
         }
 
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0; padding: 15px;
-            line-height: 1.5;
-        }
-
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 15px; }
         .container { max-width: 1100px; margin: 0 auto; }
 
-        /* HEADER REFORMULADO */
-        .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            gap: 15px;
-            background: var(--card);
-            padding: 15px 20px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
+        /* Estilos do Header */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: var(--card); padding: 15px 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .logo-alumar { width: 120px; }
+        .header-titles h2 { font-size: 1.3rem; margin: 0; color: var(--primary); }
         
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-alumar {
-            width: 120px;
-            height: auto;
-            object-fit: contain;
-        }
-
-        .header-titles h2 { 
-            font-size: 1.3rem; 
-            margin: 0; 
-            color: var(--primary); 
-            font-weight: 800;
-            letter-spacing: -0.025em;
-        }
-        .header-titles p { font-size: 0.8rem; margin: 0; color: var(--secondary); font-weight: 600; text-transform: uppercase; }
-
-        .header-description {
-            font-size: 0.85rem;
-            color: var(--text);
-            line-height: 1.5;
-            margin-bottom: 20px;
-            background: var(--accent);
-            padding: 15px;
-            border-left: 4px solid var(--primary);
-            border-radius: 4px 8px 8px 4px;
-        }
-
-        .datetime-box { text-align: right; line-height: 1.3; }
-        #data-extenso { font-size: 0.85rem; font-weight: 700; color: var(--primary); }
-        #relogio { font-size: 0.75rem; color: var(--secondary); font-family: monospace; }
-
-        /* BUSCA ESTILIZADA */
+        /* Estilos da Busca e Filtros */
         .search-box { position: relative; width: 100%; margin-bottom: 15px; }
-        .search-box input {
-            width: 100%; padding: 14px 45px 14px 15px; 
-            border: 2px solid var(--border); border-radius: 8px;
-            background: var(--card); color: var(--text); font-size: 15px; 
-            outline: none; box-sizing: border-box; transition: border-color 0.2s;
-        }
-        .search-box input:focus { border-color: var(--primary); }
+        .search-box input { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 8px; background: var(--card); color: var(--text); box-sizing: border-box; }
         
-        #clearSearch {
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-            background: var(--secondary); color: white; border: none; border-radius: 50%;
-            width: 22px; height: 22px; display: none; align-items: center; justify-content: center;
-            font-size: 10px; cursor: pointer;
-        }
-
-        /* FILTROS */
         .filter-controls { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-btn { padding: 10px 14px; border-radius: 6px; cursor: pointer; background: var(--card); border: 1px solid var(--border); color: var(--text); font-weight: 600; font-size: 0.75rem; }
+        .filter-btn.active { background: var(--primary); color: white; }
 
-        .filter-btn, #btnLimpar {
-            padding: 10px 14px; border-radius: 6px; font-size: 0.75rem;
-            cursor: pointer; font-weight: 600; border: 1px solid var(--border);
-            transition: all 0.2s;
-        }
-        #btnLimpar { background: var(--white); color: var(--danger); border-color: var(--danger); }
-        #btnLimpar:hover { background: var(--danger); color: var(--white); }
+        .dropdown-content { display: none; position: absolute; background: var(--card); min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); z-index: 100; border-radius: 8px; max-height: 200px; overflow-y: auto; border: 1px solid var(--border); }
+        .dropdown-content.show { display: block; }
+        .dropdown-item { padding: 10px; cursor: pointer; font-size: 0.85rem; }
+        .dropdown-item:hover { background: var(--accent); }
+
+        /* Estilos da Tabela */
+        .table-wrapper { background: var(--card); border-radius: 12px; overflow-x: auto; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th { padding: 12px; text-align: left; background: #f9fafb; color: var(--secondary); font-size: 0.7rem; text-transform: uppercase; }
+        td { padding: 12px; border-top: 1px solid var(--border); font-size: 0.85rem; }
         
-        .filter-btn { background: var(--card); color: var(--text); }
-        .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .dropdown-content {
-            display: none; position: absolute; top: 42px; left: 0;
-            background: var(--card); min-width: 180px; 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-            border-radius: 8px; border: 1px solid var(--border); z-index: 100;
-            max-height: 250px; overflow-y: auto; padding: 6px;
-        }
-        .dropdown-content.show { display: block; animation: fadeIn 0.2s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        /* Estilos do Formulário de Sugestão */
+        .form-container { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); margin-top: 30px; }
+        .input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .input-group input, textarea { padding: 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); }
         
-        .dropdown-item { padding: 10px 12px; cursor: pointer; border-radius: 4px; font-size: 0.85rem; }
-        .dropdown-item:hover { background: var(--accent); color: var(--primary); }
-
-        .results-counter {
-            font-size: 0.8rem; color: var(--secondary);
-            margin-bottom: 10px; font-weight: 700; padding-left: 2px;
-        }
-
-        /* TABELA PROFISSIONAL */
-        .table-wrapper { 
-            background: var(--card); border-radius: 12px; overflow-x: auto; 
-            border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { 
-            background: #f3f4f6; padding: 14px; text-align: left; 
-            font-size: 0.7rem; color: var(--secondary); text-transform: uppercase; 
-            letter-spacing: 0.05em; border-bottom: 2px solid var(--border);
-        }
-        td { padding: 14px; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
-        tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
-        tr:hover { background-color: var(--accent); }
-
-        .badge-parada {
-            background: var(--highlight); color: #854d0e; padding: 5px 10px;
-            border-radius: 4px; font-weight: 700; font-size: 0.75rem; border: 1px solid #fef08a;
-        }
-
-        /* RESPONSIVIDADE */
-        @media (max-width: 900px) {
-            .header { flex-direction: column; text-align: center; }
-            .header-left { flex-direction: column; }
-            .datetime-box { text-align: center; border-top: 1px solid var(--border); padding-top: 10px; width: 100%; }
-            
-            table, thead, tbody, th, td, tr { display: block; }
-            table { min-width: auto; }
-            thead { display: none; }
-            tr { margin-bottom: 15px; border: 1px solid var(--border); border-radius: 12px; padding: 10px; }
-            td { display: flex; justify-content: space-between; align-items: center; padding: 8px 5px; border: none; }
-            td::before { content: attr(data-label); font-weight: 700; color: var(--secondary); font-size: 0.7rem; text-transform: uppercase; }
-            td[data-label="Parada"] {
-                background: var(--accent); margin: 8px -10px; padding: 12px 15px;
-                border-radius: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-            }
-        }
-
-        .btn-share {
-            background: var(--whatsapp); color: white; border: none;
-            padding: 8px 16px; border-radius: 6px; cursor: pointer;
-            display: flex; align-items: center; gap: 8px; font-weight: 700;
-            transition: transform 0.1s;
-        }
-        .btn-share:active { transform: scale(0.95); }
-
-        #loader { display: flex; flex-direction: column; align-items: center; padding: 50px; }
-        .spinner {
-            width: 35px; height: 35px; border: 4px solid var(--border);
-            border-top: 4px solid var(--primary); border-radius: 50%;
-            animation: spin 1s linear infinite; margin-bottom: 15px;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .btn-share { background: var(--whatsapp); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        #loader { text-align: center; padding: 40px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -211,30 +79,18 @@
                 <p>Facilities & Security</p>
             </div>
         </div>
-        <div class="datetime-box">
-            <div id="data-extenso">--/--/-- - ---</div>
-            <div id="relogio">00:00:00</div>
-        </div>
-    </div>
-
-    <div class="header-description">
-        <strong>Manual:</strong> Utilize os filtros abaixo para localizar sua rota. Ao encontrar seu ponto de embarque, clique no botão <strong>📲 Enviar</strong> para notificar automaticamente o setor de transporte via WhatsApp.
+        <div id="relogio" style="font-family: monospace; font-weight: bold;"></div>
     </div>
 
     <div class="search-box">
-        <input type="text" id="search" placeholder="Pesquisar por linha, bairro ou ponto..." autocomplete="off">
-        <button id="clearSearch">✕</button>
+        <input type="text" id="search" placeholder="Pesquisar por linha, bairro ou ponto...">
     </div>
 
     <div class="filter-controls">
-        <button id="btnLimpar" onclick="limparFiltros()">🔄 Limpar Filtros</button>
+        <button class="filter-btn" onclick="limparFiltros()">🔄 Limpar</button>
         <div style="position: relative;">
             <button class="filter-btn" id="btnFiltroTurno" onclick="toggleDropdown('dropTurno')">Turno ▾</button>
             <div id="dropTurno" class="dropdown-content"></div>
-        </div>
-        <div style="position: relative;">
-            <button class="filter-btn" id="btnFiltroTipo" onclick="toggleDropdown('dropTipo')">Viagem ▾</button>
-            <div id="dropTipo" class="dropdown-content"></div>
         </div>
         <div style="position: relative;">
             <button class="filter-btn" id="btnFiltroBairro" onclick="toggleDropdown('dropBairro')">Bairro ▾</button>
@@ -246,104 +102,107 @@
         </div>
     </div>
 
-    <div id="loader">
-        <div class="spinner"></div>
-        <span style="font-size: 0.85rem; color: var(--secondary)">Acessando base de dados Alumar...</span>
-    </div>
+    <div id="loader">Carregando dados...</div>
 
-    <div id="container-tabela-completo" class="hidden">
-        <div id="contador-resultados" class="results-counter"></div>
+    <div id="container-tabela" class="hidden">
         <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
                         <th>Turno</th>
                         <th>Linha</th>
-                        <th>Viagem</th>
                         <th>Bairro</th>
-                        <th>Ponto de Passagem</th>
-                        <th>Parada</th>
-                        <th>Solicitar</th>
+                        <th>Ponto</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
             </table>
         </div>
     </div>
+
+    <div class="form-container">
+        <h3 style="color: var(--primary); margin-top: 0;">📝 Sugerir Nova Rota/Ponto</h3>
+        <p style="font-size: 0.8rem; color: var(--secondary);">Não encontrou sua rota? Envie uma sugestão para análise.</p>
+        <form id="formSugestao">
+            <div class="input-group">
+                <input type="text" id="novoBairro" placeholder="Bairro" required>
+                <input type="text" id="novoPonto" placeholder="Ponto de Referência" required>
+            </div>
+            <textarea id="obs" placeholder="Alguma observação importante?" style="width: 100%; height: 60px;"></textarea>
+            <button type="submit" id="btnEnviarDados" style="margin-top: 10px; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%;">
+                Salvar Sugestão no SharePoint
+            </button>
+        </form>
+        <p id="statusEnvio" style="font-size: 0.85rem; margin-top: 10px; font-weight: bold; display: none;"></p>
+    </div>
 </div>
 
 <script>
     let pontos = [];
-    let filtroAtivo = { turno: null, tipo: null, bairro: null, linha: null };
+    let filtroAtivo = { turno: null, bairro: null, linha: null };
 
-    const searchInput = document.getElementById('search');
-    const clearBtn = document.getElementById('clearSearch');
-
-    function atualizarTempo() {
-        const agora = new Date();
-        const dias = ['DOMINGO', 'SEGUNDA-FEIRA', 'TERÇA-FEIRA', 'QUARTA-FEIRA', 'QUINTA-FEIRA', 'SEXTA-FEIRA', 'SÁBADO'];
-        const dia = String(agora.getDate()).padStart(2, '0');
-        const mes = String(agora.getMonth() + 1).padStart(2, '0');
-        const ano = agora.getFullYear();
-        document.getElementById('data-extenso').innerText = `${dia}/${mes}/${ano} - ${dias[agora.getDay()]}`;
-        document.getElementById('relogio').innerText = agora.toLocaleTimeString('pt-br');
-    }
-    setInterval(atualizarTempo, 1000);
-    atualizarTempo();
-
-    function toggleDropdown(id) {
-        document.querySelectorAll('.dropdown-content').forEach(d => {
-            if (d.id !== id) d.classList.remove('show');
-        });
-        document.getElementById(id).classList.toggle("show");
-    }
-
-    // Fecha dropdown ao clicar fora
-    window.onclick = function(event) {
-        if (!event.target.matches('.filter-btn')) {
-            document.querySelectorAll('.dropdown-content').forEach(d => d.classList.remove('show'));
-        }
-    }
-
+    // --- LÓGICA DE CONSULTA ---
     async function carregarCSV() {
         try {
-            const response = await fetch('pontos.csv');
-            const buffer = await response.arrayBuffer();
-            const decoder = new TextDecoder('utf-8');
-            const data = decoder.decode(buffer);
-            const linhasCSV = data.split(/\r?\n/).filter(l => l.trim() !== "");
+            const resp = await fetch('pontos.csv?v=' + Date.now());
+            const buffer = await resp.arrayBuffer();
+            let decoder = new TextDecoder('utf-8');
+            let data = decoder.decode(buffer);
+            
+            if (data.includes('')) {
+                decoder = new TextDecoder('windows-1252');
+                data = decoder.decode(buffer);
+            }
 
-            pontos = linhasCSV.slice(1).map(linha => {
-                const col = linha.split(',');
-                return {
-                    turno: col[0]?.trim() || '-',
-                    linha: col[1]?.trim() || '-',
-                    tipo:  col[2]?.trim() || '-',
-                    bairro: col[3]?.trim() || '-',
-                    ponto:  col[4]?.trim() || '-',
-                    parada: col[5]?.trim() || '-'
-                };
+            const linhas = data.split(/\r?\n/).filter(l => l.trim() !== "");
+            pontos = linhas.slice(1).map(linha => {
+                const sep = linha.includes(';') ? ';' : ',';
+                const col = linha.split(sep).map(c => c.trim().replace(/^"|"$/g, ''));
+                return { turno: col[0], linha: col[1], tipo: col[2], bairro: col[3], ponto: col[4], parada: col[5] };
             });
 
             aplicarFiltros();
             document.getElementById('loader').classList.add('hidden');
-            document.getElementById('container-tabela-completo').classList.remove('hidden');
-        } catch (e) {
-            document.getElementById('loader').innerHTML = "<span style='color:red'>Erro ao carregar base de dados.</span>";
-        }
+            document.getElementById('container-tabela').classList.remove('hidden');
+        } catch (e) { console.error(e); }
     }
 
-    searchInput.addEventListener('input', () => {
-        clearBtn.style.display = searchInput.value.length > 0 ? 'flex' : 'none';
-        aplicarFiltros();
-    });
+    function aplicarFiltros() {
+        const busca = document.getElementById('search').value.toLowerCase();
+        let filtrados = pontos.filter(p => {
+            const matchBusca = !busca || Object.values(p).some(v => v.toLowerCase().includes(busca));
+            const matchTurno = !filtroAtivo.turno || p.turno === filtroAtivo.turno;
+            const matchBairro = !filtroAtivo.bairro || p.bairro === filtroAtivo.bairro;
+            const matchLinha = !filtroAtivo.linha || p.linha === filtroAtivo.linha;
+            return matchBusca && matchTurno && matchBairro && matchLinha;
+        });
+        
+        renderTabela(filtrados);
+        atualizarMenus(busca);
+    }
 
-    clearBtn.addEventListener('click', () => {
-        searchInput.value = '';
-        clearBtn.style.display = 'none';
-        searchInput.focus();
-        aplicarFiltros();
-    });
+    function renderTabela(lista) {
+        document.getElementById('tableBody').innerHTML = lista.map(p => `
+            <tr>
+                <td>${p.turno}</td>
+                <td style="font-weight:bold; color:var(--primary)">${p.linha}</td>
+                <td>${p.bairro}</td>
+                <td>${p.ponto}</td>
+                <td><button class="btn-share" onclick="compartilhar('${p.linha}')">📲 Enviar</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function atualizarMenus(busca) {
+        // Lógica de menus suspensos "vivos"
+        const campos = ['turno', 'bairro', 'linha'];
+        campos.forEach(campo => {
+            const unicos = [...new Set(pontos.map(p => p[campo]))].filter(v => v).sort();
+            document.getElementById('drop' + campo.charAt(0).toUpperCase() + campo.slice(1)).innerHTML = 
+                unicos.map(v => `<div class="dropdown-item" onclick="setFiltro('${campo}', '${v}')">${v}</div>`).join('');
+        });
+    }
 
     function setFiltro(campo, valor) {
         filtroAtivo[campo] = valor;
@@ -351,79 +210,63 @@
         aplicarFiltros();
     }
 
-    function aplicarFiltros() {
-        let res = pontos;
-        if (filtroAtivo.turno) res = res.filter(p => p.turno === filtroAtivo.turno);
-        if (filtroAtivo.tipo) res = res.filter(p => p.tipo === filtroAtivo.tipo);
-        if (filtroAtivo.bairro) res = res.filter(p => p.bairro === filtroAtivo.bairro);
-        if (filtroAtivo.linha) res = res.filter(p => p.linha === filtroAtivo.linha);
-
-        const busca = searchInput.value.toLowerCase();
-        if (busca) res = res.filter(p => Object.values(p).some(v => v.toLowerCase().includes(busca)));
-
-        const contador = document.getElementById('contador-resultados');
-        contador.innerText = res.length === 1 ? "1 itinerário encontrado" : `${res.length} itinerários encontrados`;
-
-        mostrarTabela(res);
-        atualizarMenus();
-    }
-
-    function atualizarMenus() {
-        const campos = ['turno', 'tipo', 'bairro', 'linha'];
-        const ids = { turno: 'dropTurno', tipo: 'dropTipo', bairro: 'dropBairro', linha: 'dropLinha' };
-
-        campos.forEach(campoAlvo => {
-            let dadosFiltrados = pontos.filter(p => {
-                return (filtroAtivo.turno === null || campoAlvo === 'turno' || p.turno === filtroAtivo.turno) &&
-                       (filtroAtivo.tipo === null || campoAlvo === 'tipo' || p.tipo === filtroAtivo.tipo) &&
-                       (filtroAtivo.bairro === null || campoAlvo === 'bairro' || p.bairro === filtroAtivo.bairro) &&
-                       (filtroAtivo.linha === null || campoAlvo === 'linha' || p.linha === filtroAtivo.linha);
-            });
-            const unicos = [...new Set(dadosFiltrados.map(p => p[campoAlvo]))].filter(v => v !== '-').sort();
-            const container = document.getElementById(ids[campoAlvo]);
-            if(container) {
-                container.innerHTML = unicos.map(v => `<div class="dropdown-item" onclick="setFiltro('${campoAlvo}', '${v}')">${v}</div>`).join('');
-            }
-        });
-    }
-
     function limparFiltros() {
-        filtroAtivo = { turno: null, tipo: null, bairro: null, linha: null };
+        filtroAtivo = { turno: null, bairro: null, linha: null };
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        searchInput.value = "";
-        clearBtn.style.display = 'none';
+        document.getElementById('search').value = "";
         aplicarFiltros();
     }
 
-    function compartilhar(p) {
-        const agora = new Date();
-        const dataFormatada = `${String(agora.getDate()).padStart(2, '0')}/${String(agora.getMonth() + 1).padStart(2, '0')}/${agora.getFullYear()}`;
-        const msg = `*ALUMAR - SOLICITAÇÃO DE TRANSPORTE*%0A%0A*Data:* ${dataFormatada}%0A*Linha:* ${p.linha}%0A*Turno:* ${p.turno}%0A*Bairro:* ${p.bairro}%0A*Parada:* ${p.parada}%0A*Viagem:* ${p.tipo}`;
-        window.open(`https://api.whatsapp.com/send?phone=5598982380013&text=${msg}`, '_blank');
+    function toggleDropdown(id) {
+        document.querySelectorAll('.dropdown-content').forEach(d => d.id !== id && d.classList.remove('show'));
+        document.getElementById(id).classList.toggle('show');
     }
 
-    function mostrarTabela(lista) {
-        const tb = document.getElementById('tableBody');
-        if (lista.length === 0) {
-            tb.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:50px; color:var(--secondary)">Nenhuma rota encontrada para os critérios selecionados.</td></tr>`;
-            return;
+    // --- LÓGICA DE ENVIO PARA NUVEM ---
+    document.getElementById('formSugestao').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btnEnviarDados');
+        const status = document.getElementById('statusEnvio');
+        
+        const dados = {
+            bairro: document.getElementById('novoBairro').value,
+            ponto: document.getElementById('novoPonto').value,
+            observacao: document.getElementById('obs').value,
+            data: new Date().toLocaleString('pt-BR')
+        };
+
+        btn.disabled = true;
+        btn.innerText = "Processando...";
+
+        try {
+            // LEMBRETE: Substitua a URL abaixo pela URL gerada no seu Power Automate
+            const URL_WEBHOOK = "SUA_URL_DO_POWER_AUTOMATE_AQUI";
+
+            const response = await fetch(URL_WEBHOOK, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            if (response.ok) {
+                status.innerText = "✅ Sugestão salva com sucesso!";
+                status.style.color = "green";
+                document.getElementById('formSugestao').reset();
+            } else { throw new Error(); }
+        } catch (err) {
+            status.innerText = "❌ Erro ao conectar com o servidor.";
+            status.style.color = "red";
+        } finally {
+            status.style.display = "block";
+            btn.disabled = false;
+            btn.innerText = "Salvar Sugestão no SharePoint";
         }
-        tb.innerHTML = lista.map(p => `
-            <tr>
-                <td data-label="Turno">${p.turno}</td>
-                <td data-label="Linha" style="color:var(--primary); font-weight:800">${p.linha}</td>
-                <td data-label="Viagem">${p.tipo}</td>
-                <td data-label="Bairro">${p.bairro}</td>
-                <td data-label="Ponto">${p.ponto}</td>
-                <td data-label="Parada"><span class="badge-parada">${p.parada}</span></td>
-                <td data-label="Ação">
-                    <button class="btn-share" onclick='compartilhar(${JSON.stringify(p)})'>📲 Enviar</button>
-                </td>
-            </tr>
-        `).join('');
-    }
+    });
 
+    // Relógio e Inicialização
+    setInterval(() => { document.getElementById('relogio').innerText = new Date().toLocaleTimeString(); }, 1000);
     window.onload = carregarCSV;
+    document.getElementById('search').addEventListener('input', aplicarFiltros);
 </script>
 
 </body>
